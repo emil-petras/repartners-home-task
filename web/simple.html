@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Packs Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 40px;
+        }
+        
+        .form-section {
+            margin-bottom: 40px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fafafa;
+        }
+        
+        .form-section h2 {
+            margin-top: 0;
+            color: #555;
+            margin-bottom: 20px;
+        }
+        
+        .input-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        button:hover {
+            background-color: #0056b3;
+        }
+        
+        .message {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        
+        .message.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .current-sizes {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #e9ecef;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .packaging-result {
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #e7f3ff;
+            border-radius: 4px;
+        }
+        
+        .package-item {
+            display: inline-block;
+            margin: 5px;
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 3px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Order Packs Calculator</h1>
+        
+        <!-- message display -->
+        {{if .ErrorMessage}}
+        <div class="message error">{{.ErrorMessage}}</div>
+        {{end}}
+        {{if .SuccessMessage}}
+        <div class="message success">{{.SuccessMessage}}</div>
+        {{end}}
+        
+        <!-- pack sizes form -->
+        <div class="form-section">
+            <h2>Pack Sizes</h2>
+            <div class="current-sizes" id="currentSizes">
+                {{.SizesDisplay}}
+            </div>
+            
+            <form method="POST" action="/pack-sizes">
+                <div class="input-group">
+                    <label for="sizes">Pack Sizes (comma-separated):</label>
+                    <input type="text" id="sizes" name="sizes" placeholder="e.g., 250, 500, 1000, 2000, 5000" required>
+                </div>
+                <button type="submit">Update Pack Sizes</button>
+            </form>
+        </div>
+        
+        <!-- packaging calculation form -->
+        <div class="form-section">
+            <h2>Calculate Packs for Order</h2>
+            <form method="POST" action="/package">
+                <div class="input-group">
+                    <label for="items">Number of Items:</label>
+                    <input type="number" id="items" name="items" min="1" value="{{.ItemsValue}}" placeholder="263" required>
+                </div>
+                <button type="submit">Calculate Packaging</button>
+            </form>
+            
+            <div id="packagingResult" class="packaging-result" style="display: none;">
+                <h3>Packaging Result</h3>
+                <div id="resultContent"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
