@@ -7,7 +7,7 @@ import (
 
 	"repartners-home-task/internal/models"
 
-	_ "github.com/mattn/go-sqlite3"
+	_ "modernc.org/sqlite"
 )
 
 // database struct wraps the sql database connection
@@ -18,7 +18,7 @@ type Database struct {
 // NewDatabase creates a new database connection and initializes tables
 func NewDatabase(dbPath string) (*Database, error) {
 	// open sqlite database connection
-	db, err := sql.Open("sqlite3", dbPath)
+	db, err := sql.Open("sqlite", dbPath)
 	if err != nil {
 		return nil, fmt.Errorf("failed to open database: %w", err)
 	}
