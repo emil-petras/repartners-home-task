@@ -175,7 +175,7 @@ deps    - Download dependencies
 
 ## Environment Variables
 
-- `SERVER_PORT` - Port to run the server on (default: 8080)
+- `PORT` - Port to run the server on (default: 8080)
 - `DATABASE_URL` - SQLite database file path (default: ./data/pack_sizes.db)
 
 ## Testing the API
@@ -209,7 +209,7 @@ curl http://localhost:8080/health
 ### Backend
 - Go 1.22
 - Chi router
-- SQLite with mattn/go-sqlite3
+- SQLite with modernc.org/sqlite (pure-Go)
 
 ### Frontend
 - HTML templates
