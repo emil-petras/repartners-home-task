@@ -14,7 +14,7 @@ type Config struct {
 // Load creates a new config with environment variables or defaults
 func Load() *Config {
 	return &Config{
-		ServerPort:  getEnv("SERVER_PORT", "8080"),
+		ServerPort:  getEnv("PORT", "8080"),
 		DatabaseURL: getEnv("DATABASE_URL", "./data/pack_sizes.db"),
 	}
 }
